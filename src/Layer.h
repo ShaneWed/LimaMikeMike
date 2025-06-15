@@ -4,6 +4,7 @@
 
 #ifndef LAYER_H
 #define LAYER_H
+#include <cstdlib>
 #include <vector>
 
 class Layer {
@@ -17,7 +18,17 @@ public:
 
     Layer(const int numInputs, const int numOfNeurons):
         numInputs(numInputs), numOfNeurons(numOfNeurons),
-        weights(numInputs * numOfNeurons), biases(numOfNeurons), outputs(numOfNeurons) {}
+        weights(numInputs * numOfNeurons), biases(numOfNeurons), outputs(numOfNeurons)
+    {
+        for (int i = 0; i < numInputs * numOfNeurons; i++) // Doesn't need to be truly random, just need neurons to have different values
+        {
+            weights[i] = static_cast<double>(random())/RAND_MAX*2.0-1.0;
+        }
+        for (int i = 0; i < numOfNeurons; i++)
+        {
+            biases[i] = static_cast<double>(random())/RAND_MAX*2.0-1.0;
+        }
+    }
 
     double& weight(const int inputId, const int neuronId)
     {

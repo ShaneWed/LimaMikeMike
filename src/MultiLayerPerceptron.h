@@ -22,12 +22,13 @@ public:
         numOfLayers(numOfLayers), learningRate(learningRate)
     {
         layers = {Layer(numOfInputs, numOfHiddenNeurons)};
-        for (int i = 1; i < numOfLayers; i++)
+        for (int i = 1; i < numOfLayers - 1; i++)
         {
             layers.emplace_back(numOfHiddenNeurons, numOfHiddenNeurons);
         }
         layers.emplace_back(numOfHiddenNeurons, numOfOutputs);
         std::cout << "MultiLayerPerceptron successfully created!" << std::endl;
+        std::cout << layers.size() << std::endl;
     }
 };
 
