@@ -4,3 +4,13 @@
 
 #include "MultiLayerPerceptron.h"
 
+void MultiLayerPerceptron::forward(double inputs[])
+{
+    for (int i : inputs)
+    {
+        for (int j : layers.at(0).outputs)
+        {
+
+        }
+    }
+}

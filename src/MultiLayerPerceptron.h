@@ -15,7 +15,7 @@ public:
     int numOfOutputs;
     int numOfLayers;
     double learningRate;
-    std::vector<Layer> layers;
+    static std::vector<Layer> layers;
 
     MultiLayerPerceptron(const int numOfInputs, const int numOfHiddenNeurons, const int numOfOutputs, const int numOfLayers, const double learningRate):
         numOfInputs(numOfInputs), numOfHiddenNeurons(numOfHiddenNeurons), numOfOutputs(numOfOutputs),
@@ -30,6 +30,8 @@ public:
         std::cout << "MultiLayerPerceptron successfully created!" << std::endl;
         std::cout << layers.size() << std::endl;
     }
+
+    static void forward(double inputs[]);
 };
 
 #endif //MULTILAYERPERCEPTRON_H
