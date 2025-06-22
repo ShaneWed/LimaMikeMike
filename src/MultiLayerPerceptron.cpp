@@ -4,13 +4,9 @@
 
 #include "MultiLayerPerceptron.h"
 
-void MultiLayerPerceptron::forward(double inputs[])
-{
-    for (int i : inputs)
-    {
-        for (int j : layers.at(0).outputs)
-        {
-
-        }
+void MultiLayerPerceptron::forward(std::vector<double> inputs) {
+    for (double i : inputs) {
+        layers.at(0).outputs.at(i) = inputs.at(i);
+        std::cout << layers.at(0).outputs.at(i) << std::endl;
     }
 }
