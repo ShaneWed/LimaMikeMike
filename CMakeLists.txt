@@ -7,4 +7,6 @@ add_executable(LimaMikeMike src/main.cpp
         src/MultiLayerPerceptron.cpp
         src/MultiLayerPerceptron.h
         src/Layer.cpp
-        src/Layer.h)
+        src/Layer.h
+        src/ActivationFunction.cpp
+        src/ActivationFunction.h)

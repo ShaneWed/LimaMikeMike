@@ -21,7 +21,7 @@ public:
         numInputs(numInputs), numOfNeurons(numOfNeurons),
         weights(numInputs * numOfNeurons), biases(numOfNeurons), outputs(numOfNeurons)
     {
-        srand(time(nullptr));
+        //srand(time(nullptr));
         for (int i = 0; i < numInputs * numOfNeurons; i++) // Doesn't need to be truly random, just need neurons to have different values
         {
             weights[i] = static_cast<double>(rand())/RAND_MAX*2.0-1.0;

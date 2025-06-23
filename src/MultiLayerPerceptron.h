@@ -6,6 +6,8 @@
 #define MULTILAYERPERCEPTRON_H
 
 #include <iostream>
+
+#include "ActivationFunction.h"
 #include "Layer.h"
 
 class MultiLayerPerceptron {
@@ -16,10 +18,11 @@ public:
     int numOfLayers;
     double learningRate;
     std::vector<Layer> layers;
+    ActivationFunction* activationFunction;
 
-    MultiLayerPerceptron(const int numOfInputs, const int numOfHiddenNeurons, const int numOfOutputs, const int numOfLayers, const double learningRate):
+    MultiLayerPerceptron(const int numOfInputs, const int numOfHiddenNeurons, const int numOfOutputs, const int numOfLayers, const double learningRate, ActivationFunction* activationFunction):
         numOfInputs(numOfInputs), numOfHiddenNeurons(numOfHiddenNeurons), numOfOutputs(numOfOutputs),
-        numOfLayers(numOfLayers), learningRate(learningRate)
+        numOfLayers(numOfLayers), learningRate(learningRate), activationFunction(activationFunction)
     {
         layers = {Layer(numOfInputs, numOfHiddenNeurons)};
         for (int i = 1; i < numOfLayers - 1; i++)

@@ -17,9 +17,8 @@ void MultiLayerPerceptron::forward(std::vector<double> inputs) {
                 weightSum += layers.at(l - 1).outputs.at(j) * layers.at(l).weights.at(i);
             }
             weightSum += layers.at(l).biases.at(i);
-            layers.at(l).weights.at(i) = weightSum;
-            // Add activation function
-            std::cout << weightSum << std::endl;
+            layers.at(l).weights.at(i) = activationFunction->calculate(weightSum);
+            std::cout << activationFunction->calculate(weightSum) << std::endl;
         }
     }
     std::cout << "Forward pass complete!" << std::endl;
