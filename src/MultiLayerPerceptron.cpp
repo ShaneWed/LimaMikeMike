@@ -23,3 +23,21 @@ void MultiLayerPerceptron::forward(std::vector<double> inputs) {
     }
     std::cout << "Forward pass complete!" << std::endl;
 }
+
+double MultiLayerPerceptron::backwards(std::vector<double> outputs, double learningRate) {
+    double error = 0;
+    double delta;
+
+    for (int i = layers.size() - 1; i > 0; i--) {
+        if (i == layers.size() - 1) { // Output layer
+            for (int j = 0; j < layers.at(layers.size() - 1).numOfNeurons; j++) {
+                error = outputs.at(j) - layers.at(layers.size() - 1).outputs.at(j);
+                delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).outputs.at(j)); // May have to change to PreActivation like in MDIC
+                
+            }
+        }
+    }
+
+    return 0.0;
+}
+

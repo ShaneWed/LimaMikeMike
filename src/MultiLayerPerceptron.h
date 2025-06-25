@@ -35,6 +35,7 @@ public:
     }
 
     void forward(std::vector<double> inputs);
+    double backwards(std::vector<double> outputs, double learningRate);
 };
 
 #endif //MULTILAYERPERCEPTRON_H
