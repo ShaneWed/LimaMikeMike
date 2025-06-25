@@ -17,7 +17,8 @@ void MultiLayerPerceptron::forward(std::vector<double> inputs) {
                 weightSum += layers.at(l - 1).outputs.at(j) * layers.at(l).weights.at(i);
             }
             weightSum += layers.at(l).biases.at(i);
-            layers.at(l).weights.at(i) = activationFunction->calculate(weightSum);
+            layers.at(l).preActivations.at(i) = weightSum;
+            layers.at(l).outputs.at(i) = activationFunction->calculate(weightSum);
             std::cout << activationFunction->calculate(weightSum) << std::endl;
         }
     }
@@ -32,8 +33,8 @@ double MultiLayerPerceptron::backwards(std::vector<double> outputs, double learn
         if (i == layers.size() - 1) { // Output layer
             for (int j = 0; j < layers.at(layers.size() - 1).numOfNeurons; j++) {
                 error = outputs.at(j) - layers.at(layers.size() - 1).outputs.at(j);
-                delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).outputs.at(j)); // May have to change to PreActivation like in MDIC
-                
+                delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).preActivations.at(j));
+                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate);
             }
         }
     }
