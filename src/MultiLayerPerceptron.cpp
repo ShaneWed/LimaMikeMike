@@ -7,7 +7,6 @@
 void MultiLayerPerceptron::forwardPass(std::vector<double> inputs) {
     for (double i : inputs) {
         layers.at(0).outputs.at(i) = inputs.at(i);
-        std::cout << layers.at(0).outputs.at(i) << std::endl;
     }
     double weightSum = 0;
     for (int l = 1; l < layers.size(); l++) { // Each layer
@@ -19,10 +18,8 @@ void MultiLayerPerceptron::forwardPass(std::vector<double> inputs) {
             weightSum += layers.at(l).biases.at(i);
             layers.at(l).preActivations.at(i) = weightSum;
             layers.at(l).outputs.at(i) = activationFunction->calculate(weightSum);
-            std::cout << activationFunction->calculate(weightSum) << std::endl;
         }
     }
-    std::cout << "Forward pass complete!" << std::endl;
 }
 
 double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, double learningRate) {
@@ -62,4 +59,28 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
             totalError += fabs(error);
         }
     }
+}
+
+void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
+    int correctOutputs = 0;
+    for (int i = 0; i < inputs.size(); i++) {
+        mlp.forwardPass(inputs[i]);
+        double maxOutput = -1;
+        int maxOutputIndex = 0;
+        int correctOutputIndex = 0;
+        for (int j = 0; j < outputs.size(); j++) {
+            double output = mlp.layers.at(mlp.layers.size() - 1).outputs.at(j);
+            if (output > maxOutput) {
+                maxOutput = output;
+                maxOutputIndex = j;
+            }
+            if (outputs[i][j] == 1) {
+                correctOutputIndex = j;
+            }
+        }
+        if (maxOutputIndex == correctOutputIndex) {
+            correctOutputs++;
+        }
+    }
+    std::cout << "Correct outputs: " << correctOutputs << "/" << outputs.size() << std::endl;
 }

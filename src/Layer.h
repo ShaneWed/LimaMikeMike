@@ -21,7 +21,7 @@ public:
 
     Layer(const int numInputs, const int numOfNeurons):
         numInputs(numInputs), numOfNeurons(numOfNeurons),
-        weights(numInputs * numOfNeurons), biases(numOfNeurons), preActivations(numOfNeurons), outputs(numOfNeurons)
+        weights(numInputs * numOfNeurons), biases(numOfNeurons), preActivations(numOfNeurons), outputs(numOfNeurons), deltas(numOfNeurons)
     {
         //srand(time(nullptr));
         for (int i = 0; i < numInputs * numOfNeurons; i++) // Doesn't need to be truly random, just need neurons to have different values

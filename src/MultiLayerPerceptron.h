@@ -37,6 +37,7 @@ public:
     void forwardPass(std::vector<double> inputs);
     double backwardsPass(const std::vector<double> &outputs, double learningRate);
     static void train(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs, int epochs);
+    static void testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs);
 };
 
 #endif //MULTILAYERPERCEPTRON_H
