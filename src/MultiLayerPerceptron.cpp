@@ -34,11 +34,19 @@ double MultiLayerPerceptron::backwards(std::vector<double> outputs, double learn
             for (int j = 0; j < layers.at(layers.size() - 1).numOfNeurons; j++) {
                 error = outputs.at(j) - layers.at(layers.size() - 1).outputs.at(j);
                 delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).preActivations.at(j));
-                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate);
+                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate, j);
+            }
+        } else {
+            for (int j = 0; j < layers.at(i).numOfNeurons; j++) {
+                delta = 0;
+                for (int k = 0; k < layers.at(i + 1).numOfNeurons; k++) {
+                    delta += layers.at(i + 1).deltas.at(k) * layers.at(i + 1).weights.at(j);
+                }
+                delta *= activationFunction->calculateDerivative(layers.at(i).preActivations.at(j));
+                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate, j);
             }
         }
     }
-
-    return 0.0;
+    error = error / layers.at(layers.size() - 1).numOfNeurons;
+    return error;
 }
-

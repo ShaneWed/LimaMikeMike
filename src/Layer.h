@@ -15,6 +15,7 @@ public:
 
     std::vector<double> weights;
     std::vector<double> biases;
+    std::vector<double> deltas;
     std::vector<double> preActivations;
     std::vector<double> outputs;
 
@@ -32,6 +33,7 @@ public:
             biases[i] = static_cast<double>(rand())/RAND_MAX*2.0-1.0;
             outputs[i] = 0;
             preActivations[i] = 0;
+            deltas[i] = 0;
         }
     }
 
@@ -40,10 +42,12 @@ public:
         return weights[neuronId * numInputs + inputId];
     }
 
-    void updateWeights(double delta, const Layer* previousLayer, double learningRate) {
+    void updateWeights(double delta, const Layer* previousLayer, double learningRate, int neuron) {
+        deltas.at(neuron) = delta;
         for (int i = 0; i < previousLayer->numOfNeurons; i++) {
             weights[i] += learningRate * delta * previousLayer->outputs[i];
         }
+        biases.at(neuron) = biases.at(neuron) + learningRate * delta;
     }
 };
 
