@@ -4,7 +4,7 @@
 
 #include "MultiLayerPerceptron.h"
 
-void MultiLayerPerceptron::forward(std::vector<double> inputs) {
+void MultiLayerPerceptron::forwardPass(std::vector<double> inputs) {
     for (double i : inputs) {
         layers.at(0).outputs.at(i) = inputs.at(i);
         std::cout << layers.at(0).outputs.at(i) << std::endl;
@@ -25,7 +25,7 @@ void MultiLayerPerceptron::forward(std::vector<double> inputs) {
     std::cout << "Forward pass complete!" << std::endl;
 }
 
-double MultiLayerPerceptron::backwards(std::vector<double> outputs, double learningRate) {
+double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, double learningRate) {
     double error = 0;
     double delta;
 
@@ -49,4 +49,17 @@ double MultiLayerPerceptron::backwards(std::vector<double> outputs, double learn
     }
     error = error / layers.at(layers.size() - 1).numOfNeurons;
     return error;
+}
+
+void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs, int epochs) {
+    double totalError = 0;
+    double error = 0;
+    for (int i = 0; i < epochs; i++) {
+        totalError = 0;
+        for (int j = 0; j < inputs.size(); j++) {
+            mlp.forwardPass(inputs[j]);
+            error = mlp.backwardsPass(outputs[j], mlp.learningRate);
+            totalError += fabs(error);
+        }
+    }
 }
