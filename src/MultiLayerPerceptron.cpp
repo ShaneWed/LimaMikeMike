@@ -61,6 +61,7 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
     }
 }
 
+// TODO ensure that this is actually working properly, should probably refactor anyway
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
     int correctOutputs = 0;
     for (int i = 0; i < inputs.size(); i++) {
@@ -68,8 +69,8 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
         double maxOutput = -1;
         int maxOutputIndex = 0;
         int correctOutputIndex = 0;
-        for (int j = 0; j < outputs.size(); j++) {
-            double output = mlp.layers.at(mlp.layers.size() - 1).outputs.at(j);
+        for (int j = 0; j < mlp.layers.back().outputs.size(); j++) {
+            double output = mlp.layers.back().outputs.at(j);
             if (output > maxOutput) {
                 maxOutput = output;
                 maxOutputIndex = j;

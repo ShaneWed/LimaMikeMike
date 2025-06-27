@@ -24,7 +24,7 @@ public:
         numOfInputs(numOfInputs), numOfHiddenNeurons(numOfHiddenNeurons), numOfOutputs(numOfOutputs),
         numOfLayers(numOfLayers), learningRate(learningRate), activationFunction(activationFunction)
     {
-        layers = {Layer(numOfInputs, numOfHiddenNeurons)};
+        layers = {Layer(numOfInputs, numOfInputs)};
         for (int i = 1; i < numOfLayers - 1; i++)
         {
             layers.emplace_back(numOfHiddenNeurons, numOfHiddenNeurons);
