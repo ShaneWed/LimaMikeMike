@@ -34,4 +34,13 @@ class Tanh : public ActivationFunction {
     }
 };
 
+class ReLU : public ActivationFunction {
+public:
+    double calculate(double z) override {
+        return z < 0 ? 0 : z;
+    }
+    double calculateDerivative(double z) override {
+        return z < 0 ? 0 : 1;
+    }
+};
 #endif //ACTIVATIONFUNCTION_H

@@ -4,8 +4,8 @@
 
 #include "MultiLayerPerceptron.h"
 
-void MultiLayerPerceptron::forwardPass(std::vector<double> inputs) {
-    for (double i : inputs) {
+void MultiLayerPerceptron::forwardPass(const std::vector<double> &inputs) {
+    for (size_t i = 0; i < inputs.size(); i++) {
         layers.at(0).outputs.at(i) = inputs.at(i);
     }
     double weightSum = 0;
@@ -62,7 +62,7 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
     }
 }
 
-// TODO ensure that this is actually working properly, should probably refactor anyway
+// TODO ensure that this is actually working properly, should probably refactor anyway; This code was designed to test Irvine so shouldn't be used for xor
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
     int correctOutputs = 0;
     for (int i = 0; i < inputs.size(); i++) {
