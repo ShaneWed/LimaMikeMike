@@ -57,6 +57,7 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
             mlp.forwardPass(inputs[j]);
             error = mlp.backwardsPass(outputs[j], mlp.learningRate);
             totalError += fabs(error);
+            std::cout << totalError << std::endl;
         }
     }
 }
@@ -79,6 +80,8 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
                 correctOutputIndex = j;
             }
         }
+        std::cout << maxOutput << std::endl;
+        //std::cout << mlp.layers.back().outputs.at(0) << std::endl;
         if (maxOutputIndex == correctOutputIndex) {
             correctOutputs++;
         }
