@@ -15,12 +15,12 @@ public:
     virtual ~ActivationFunction() = default;
 };
 
-class Sigmoid : public ActivationFunction {
+class Sigmoid final : public ActivationFunction {
 public:
-    double calculate(double z) override {
+    double calculate(const double z) override {
         return 1 / (1 + exp(-z));
     }
-    double calculateDerivative(double z) override {
+    double calculateDerivative(const double z) override {
         return calculate(z) * (1 - calculate(z));
     }
 };

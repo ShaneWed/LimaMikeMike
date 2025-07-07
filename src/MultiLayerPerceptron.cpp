@@ -22,11 +22,11 @@ void MultiLayerPerceptron::forwardPass(const std::vector<double> &inputs) {
     }
 }
 
-double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, double learningRate) {
+double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, const double learningRate) {
     double error = 0;
     double delta;
 
-    for (int i = layers.size() - 1; i > 0; i--) {
+    for (size_t i = layers.size() - 1; i > 0; i--) {
         if (i == layers.size() - 1) { // Output layer
             for (int j = 0; j < layers.at(layers.size() - 1).numOfNeurons; j++) {
                 error = outputs.at(j) - layers.at(layers.size() - 1).outputs.at(j);
@@ -64,7 +64,7 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
 
 // TODO ensure that this is actually working properly, should probably refactor anyway; This code was designed to test Irvine so shouldn't be used for xor
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
-    int correctOutputs = 0;
+    /*int correctOutputs = 0;
     for (int i = 0; i < inputs.size(); i++) {
         mlp.forwardPass(inputs[i]);
         double maxOutput = -1;
@@ -86,5 +86,22 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
             correctOutputs++;
         }
     }
-    std::cout << "Correct outputs: " << correctOutputs << "/" << outputs.size() << std::endl;
+    std::cout << "Correct outputs: " << correctOutputs << "/" << outputs.size() << std::endl;*/
+    std::cout << "\nInputs: ";
+    for (const auto & input : inputs)
+    {
+        for (const auto & val : input)
+        {
+            std::cout << val << " ";
+        }
+        std::cout << ", ";
+    }
+    std::cout << "\nOutputs: ";
+    for (const auto & output : outputs)
+    {
+        for (const auto & val : output)
+        {
+            std::cout << val << " ";
+        }
+    }
 }

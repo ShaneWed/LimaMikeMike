@@ -9,9 +9,9 @@ int main()
     Sigmoid sigmoid;
     Tanh tanh;
     ReLU relu;
-    MultiLayerPerceptron limaMikeMike(2, 5, 1, 3, 0.01, &relu);
+    MultiLayerPerceptron limaMikeMike(2, 5, 1, 3, 0, &sigmoid);
     MultiLayerPerceptron::testOutputs(limaMikeMike, input, output);
-    MultiLayerPerceptron::train(limaMikeMike, input, output, 1000);
+    MultiLayerPerceptron::train(limaMikeMike, input, output, 1);
     std::cout << "Training complete" << std::endl;
     MultiLayerPerceptron::testOutputs(limaMikeMike, input, output);
     std::cout << "Success!" << std::endl;
