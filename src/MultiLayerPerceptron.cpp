@@ -13,7 +13,7 @@ void MultiLayerPerceptron::forwardPass(const std::vector<double> &inputs) {
         for (int i = 0; i < layers[l].numOfNeurons; i++) { // This layer's neurons
             weightSum = 0;
             for (int j = 0; j < layers[l - 1].numOfNeurons; j++) { // Previous layer's neurons
-                weightSum += layers[l - 1].outputs[j] * layers[l].weights[i];
+                weightSum += layers[l - 1].outputs[j] * layers[l].weights[i * layers[l - 1].numOfNeurons + j];
             }
             weightSum += layers[l].biases[i];
             layers[l].preActivations[i] = weightSum;
@@ -23,13 +23,15 @@ void MultiLayerPerceptron::forwardPass(const std::vector<double> &inputs) {
 }
 
 double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, const double learningRate) {
+    double totalError = 0;
     double error = 0;
     double delta;
 
-    for (size_t i = layers.size() - 1; i > 0; i--) {
+    for (int i = layers.size() - 1; i > 0; i--) {
         if (i == layers.size() - 1) { // Output layer
             for (int j = 0; j < layers[layers.size() - 1].numOfNeurons; j++) {
                 error = outputs[j] - layers[layers.size() - 1].outputs[j];
+                totalError += error * error;
                 delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).preActivations.at(j));
                 layers[i].updateWeights(delta, &layers[i - 1], learningRate, j);
             }
@@ -44,7 +46,7 @@ double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, c
             }
         }
     }
-    error = error / layers[layers.size() - 1 ].numOfNeurons;
+    error = totalError / layers[layers.size() - 1 ].numOfNeurons;
     std::cout << "CURRENT ERROR: " << error << std::endl;
     return error;
 }
