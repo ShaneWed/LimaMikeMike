@@ -6,18 +6,18 @@
 
 void MultiLayerPerceptron::forwardPass(const std::vector<double> &inputs) {
     for (size_t i = 0; i < inputs.size(); i++) {
-        layers.at(0).outputs.at(i) = inputs.at(i);
+        layers[0].outputs[i] = inputs[i];
     }
     double weightSum = 0;
     for (int l = 1; l < layers.size(); l++) { // Each layer
-        for (int i = 0; i < layers.at(l).numOfNeurons; i++) { // This layer's neurons
+        for (int i = 0; i < layers[l].numOfNeurons; i++) { // This layer's neurons
             weightSum = 0;
-            for (int j = 0; j < layers.at(l - 1).numOfNeurons; j++) { // Previous layer's neurons
-                weightSum += layers.at(l - 1).outputs.at(j) * layers.at(l).weights.at(i);
+            for (int j = 0; j < layers[l - 1].numOfNeurons; j++) { // Previous layer's neurons
+                weightSum += layers[l - 1].outputs[j] * layers[l].weights[i];
             }
-            weightSum += layers.at(l).biases.at(i);
-            layers.at(l).preActivations.at(i) = weightSum;
-            layers.at(l).outputs.at(i) = activationFunction->calculate(weightSum);
+            weightSum += layers[l].biases[i];
+            layers[l].preActivations[i] = weightSum;
+            layers[l].outputs[i] = activationFunction->calculate(weightSum);
         }
     }
 }
@@ -28,23 +28,24 @@ double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, c
 
     for (size_t i = layers.size() - 1; i > 0; i--) {
         if (i == layers.size() - 1) { // Output layer
-            for (int j = 0; j < layers.at(layers.size() - 1).numOfNeurons; j++) {
-                error = outputs.at(j) - layers.at(layers.size() - 1).outputs.at(j);
+            for (int j = 0; j < layers[layers.size() - 1].numOfNeurons; j++) {
+                error = outputs[j] - layers[layers.size() - 1].outputs[j];
                 delta = error * activationFunction->calculateDerivative(layers.at(layers.size() - 1).preActivations.at(j));
-                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate, j);
+                layers[i].updateWeights(delta, &layers[i - 1], learningRate, j);
             }
         } else {
-            for (int j = 0; j < layers.at(i).numOfNeurons; j++) {
+            for (int j = 0; j < layers[i].numOfNeurons; j++) {
                 delta = 0;
-                for (int k = 0; k < layers.at(i + 1).numOfNeurons; k++) {
-                    delta += layers.at(i + 1).deltas.at(k) * layers.at(i + 1).weights.at(j);
+                for (int k = 0; k < layers[i + 1].numOfNeurons; k++) {
+                    delta += layers[i + 1].deltas[k] * layers[i + 1].weights[k * layers[i].numOfNeurons + j];
                 }
-                delta *= activationFunction->calculateDerivative(layers.at(i).preActivations.at(j));
-                layers.at(i).updateWeights(delta, &layers.at(i - 1), learningRate, j);
+                delta *= activationFunction->calculateDerivative(layers[i].preActivations[j]);
+                layers[i].updateWeights(delta, &layers[i - 1], learningRate, j);
             }
         }
     }
-    error = error / layers.at(layers.size() - 1).numOfNeurons;
+    error = error / layers[layers.size() - 1 ].numOfNeurons;
+    std::cout << "CURRENT ERROR: " << error << std::endl;
     return error;
 }
 
@@ -62,32 +63,9 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
     }
 }
 
-// TODO ensure that this is actually working properly, should probably refactor anyway; This code was designed to test Irvine so shouldn't be used for xor
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
-    /*int correctOutputs = 0;
-    for (int i = 0; i < inputs.size(); i++) {
-        mlp.forwardPass(inputs[i]);
-        double maxOutput = -1;
-        int maxOutputIndex = 0;
-        int correctOutputIndex = 0;
-        for (int j = 0; j < mlp.layers.back().outputs.size(); j++) {
-            double output = mlp.layers.back().outputs.at(j);
-            if (output > maxOutput) {
-                maxOutput = output;
-                maxOutputIndex = j;
-            }
-            if (outputs[i][j] == 1) {
-                correctOutputIndex = j;
-            }
-        }
-        //std::cout << maxOutput << std::endl;
-        //std::cout << mlp.layers.back().outputs.at(0) << std::endl;
-        if (maxOutputIndex == correctOutputIndex) {
-            correctOutputs++;
-        }
-    }
-    std::cout << "Correct outputs: " << correctOutputs << "/" << outputs.size() << std::endl;*/
     bool correct = true;
+    std::cout << "testOutputs running... " << std::endl;
     for (int i = 0; i < inputs.size(); i++) {
         mlp.forwardPass(inputs[i]);
         for (int j = 0; j < outputs[i].size(); j++) {
