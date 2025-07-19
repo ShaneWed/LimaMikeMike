@@ -57,7 +57,7 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
             mlp.forwardPass(inputs[j]);
             error = mlp.backwardsPass(outputs[j], mlp.learningRate);
             totalError += fabs(error);
-            std::cout << totalError << std::endl;
+            //std::cout << totalError << std::endl;
         }
     }
 }
@@ -80,28 +80,26 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
                 correctOutputIndex = j;
             }
         }
-        std::cout << maxOutput << std::endl;
+        //std::cout << maxOutput << std::endl;
         //std::cout << mlp.layers.back().outputs.at(0) << std::endl;
         if (maxOutputIndex == correctOutputIndex) {
             correctOutputs++;
         }
     }
     std::cout << "Correct outputs: " << correctOutputs << "/" << outputs.size() << std::endl;*/
-    std::cout << "\nInputs: ";
-    for (const auto & input : inputs)
-    {
-        for (const auto & val : input)
-        {
-            std::cout << val << " ";
-        }
-        std::cout << ", ";
-    }
-    std::cout << "\nOutputs: ";
-    for (const auto & output : outputs)
-    {
-        for (const auto & val : output)
-        {
-            std::cout << val << " ";
+    bool correct = true;
+    for (int i = 0; i < inputs.size(); i++) {
+        mlp.forwardPass(inputs[i]);
+        for (int j = 0; j < outputs[i].size(); j++) {
+            std::cout << mlp.layers[mlp.numOfLayers - 1].outputs[j] << std::endl;
+            if (mlp.layers[mlp.numOfLayers - 1].outputs[j] != outputs[i][j]) {
+                correct = false;
+            }
         }
     }
+    /*std::cout << "Outputs are " << correct << std::endl;
+    std::cout << "Actual mlp outputs: " << std::endl;
+    for (int i = 0; i < mlp.numOfOutputs; i++) {
+        std::cout << mlp.layers[mlp.numOfLayers - 1].outputs[i] << " ";
+    }*/
 }
