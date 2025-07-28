@@ -1,7 +1,3 @@
-//
-// Created by shane on 6/23/2025.
-//
-
 #ifndef ACTIVATIONFUNCTION_H
 #define ACTIVATIONFUNCTION_H
 #include <valarray>

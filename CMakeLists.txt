@@ -9,4 +9,6 @@ add_executable(LimaMikeMike src/main.cpp
         src/Layer.cpp
         src/Layer.h
         src/ActivationFunction.cpp
-        src/ActivationFunction.h)
+        src/ActivationFunction.h
+        src/TrainingData.cpp
+        src/TrainingData.h)

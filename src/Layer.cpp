@@ -1,7 +1,3 @@
-//
-// Created by shane on 6/8/25.
-//
-
 #include "Layer.h"
 
 void Layer::updateWeights(double delta, const Layer* previousLayer, double learningRate, int neuron) {

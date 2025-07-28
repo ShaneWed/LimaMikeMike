@@ -1,7 +1,3 @@
-//
-// Created by shane on 6/8/25.
-//
-
 #ifndef MULTILAYERPERCEPTRON_H
 #define MULTILAYERPERCEPTRON_H
 
