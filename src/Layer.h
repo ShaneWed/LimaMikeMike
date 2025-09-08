@@ -27,7 +27,7 @@ public:
         for (int i = 0; i < numInputs * numOfNeurons; i++) // Doesn't need to be truly random, just need neurons to have different values
         {
             weights[i] = range(gen);
-            std::cout << weights[i] << std::endl;
+            //std::cout << weights[i] << std::endl;
         }
         for (int i = 0; i < numOfNeurons; i++)
         {

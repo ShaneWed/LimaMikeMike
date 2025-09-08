@@ -3,6 +3,8 @@ project(LimaMikeMike)
 
 set(CMAKE_CXX_STANDARD 20)
 
+include_directories(/usr/lib/gcc)
+
 add_executable(LimaMikeMike src/main.cpp
         src/MultiLayerPerceptron.cpp
         src/MultiLayerPerceptron.h

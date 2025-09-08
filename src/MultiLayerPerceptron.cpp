@@ -43,7 +43,7 @@ double MultiLayerPerceptron::backwardsPass(const std::vector<double> &outputs, c
         }
     }
     error = totalError / layers[layers.size() - 1 ].numOfNeurons;
-    std::cout << "CURRENT ERROR: " << error << std::endl;
+    //std::cout << "CURRENT ERROR: " << error << std::endl;
     return error;
 }
 
@@ -62,7 +62,18 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
 }
 
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
-    bool correct = true;
+    int correctOutputs = 0;
+    for (int i = 0; i < inputs.size(); i++)
+    {
+        mlp.forwardPass(inputs[i]);
+        std::cout << std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 1000.0) / 1000.0 << ", " << std::round(outputs[i][0] * 1000.0) / 1000.0 << std::endl;
+        if (std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 1000.0) / 1000.0 == std::round(outputs[i][0] * 1000.0) / 1000.0) {
+            correctOutputs++;
+        }
+    }
+    std::cout << "Correct outputs: " << correctOutputs << " / " << inputs.size() << std::endl;
+
+    /*bool correct = true;
     std::cout << "testOutputs running... " << std::endl;
     for (int i = 0; i < inputs.size(); i++) {
         mlp.forwardPass(inputs[i]);
@@ -72,10 +83,5 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
                 correct = false;
             }
         }
-    }
-    /*std::cout << "Outputs are " << correct << std::endl;
-    std::cout << "Actual mlp outputs: " << std::endl;
-    for (int i = 0; i < mlp.numOfOutputs; i++) {
-        std::cout << mlp.layers[mlp.numOfLayers - 1].outputs[i] << " ";
     }*/
 }
