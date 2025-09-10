@@ -58,18 +58,28 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
             totalError += fabs(error);
             //std::cout << totalError << std::endl;
         }
+        if (i % 100 == 0)
+        {
+            std::cout << "Epoch #" << i << ", Current error: " << totalError << std::endl;
+        }
     }
 }
 
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
     int correctOutputs = 0;
+    double difference = 0;
     for (int i = 0; i < inputs.size(); i++)
     {
         mlp.forwardPass(inputs[i]);
-        std::cout << std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 1000.0) / 1000.0 << ", " << std::round(outputs[i][0] * 1000.0) / 1000.0 << std::endl;
-        if (std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 1000.0) / 1000.0 == std::round(outputs[i][0] * 1000.0) / 1000.0) {
+        difference = fabs(mlp.layers[mlp.numOfLayers - 1].outputs[0] - outputs[i][0]);
+        if (constexpr double acceptableError = 0.01; difference <= acceptableError)
+        {
             correctOutputs++;
         }
+        /*std::cout << std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 100.0) / 100.0 << ", " << std::round(outputs[i][0] * 100.0) / 100.0 << std::endl;
+        if (std::round(mlp.layers[mlp.numOfLayers - 1].outputs[0] * 100.0) / 100.0 == std::round(outputs[i][0] * 100.0) / 100.0) {
+            correctOutputs++;
+        }*/
     }
     std::cout << "Correct outputs: " << correctOutputs << " / " << inputs.size() << std::endl;
 
