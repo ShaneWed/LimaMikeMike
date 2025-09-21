@@ -68,11 +68,11 @@ void MultiLayerPerceptron::train(MultiLayerPerceptron &mlp, const std::vector<st
 void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vector<std::vector<double>> &inputs, const std::vector<std::vector<double>> &outputs) {
     int correctOutputs = 0;
     double difference = 0;
-    for (int i = 0; i < inputs.size(); i++)
+    for (int i = 0; i < inputs.size(); i++) // Currently only for one output
     {
         mlp.forwardPass(inputs[i]);
         difference = fabs(mlp.layers[mlp.numOfLayers - 1].outputs[0] - outputs[i][0]);
-        if (constexpr double acceptableError = 0.01; difference <= acceptableError)
+        if (constexpr double acceptableError = 0.005; difference <= acceptableError)
         {
             correctOutputs++;
         }
@@ -82,16 +82,4 @@ void MultiLayerPerceptron::testOutputs(MultiLayerPerceptron &mlp, const std::vec
         }*/
     }
     std::cout << "Correct outputs: " << correctOutputs << " / " << inputs.size() << std::endl;
-
-    /*bool correct = true;
-    std::cout << "testOutputs running... " << std::endl;
-    for (int i = 0; i < inputs.size(); i++) {
-        mlp.forwardPass(inputs[i]);
-        for (int j = 0; j < outputs[i].size(); j++) {
-            std::cout << mlp.layers[mlp.numOfLayers - 1].outputs[j] << std::endl;
-            if (mlp.layers[mlp.numOfLayers - 1].outputs[j] != outputs[i][j]) {
-                correct = false;
-            }
-        }
-    }*/
 }

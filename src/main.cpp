@@ -19,7 +19,7 @@ int main()
     return 0;*/
 
     Tanh tanh;
-    MultiLayerPerceptron limaMikeMike(4, 25, 1, 6, 0.1, &tanh);
+    MultiLayerPerceptron limaMikeMike(4, 5, 1, 10, 0.1, &tanh);
     const TrainingData sinData(4, 1, 1000, 100);
     //MultiLayerPerceptron::testOutputs(limaMikeMike, sinData.testingInputs, sinData.testingOutputs);
     MultiLayerPerceptron::train(limaMikeMike, sinData.trainingInputs, sinData.trainingOutputs, 1000);
