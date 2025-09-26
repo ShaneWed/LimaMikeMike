@@ -13,6 +13,10 @@ public:
     std::vector<std::vector<double>> trainingOutputs;
     std::vector<std::vector<double>> testingInputs;
     std::vector<std::vector<double>> testingOutputs;
+    std::vector<std::vector<double>> letterTrainingInputs;
+    std::vector<std::vector<double>> letterTrainingOutputs;
+    std::vector<std::vector<double>> letterTestingInputs;
+    std::vector<std::vector<double>> letterTestingOutputs;
 
     TrainingData(const int numInputs, const int numOutputs, const int numTrainingVectors, const int numTestingVectors):
     numInputs(numInputs), numOutputs(numOutputs), numTrainingVectors(numTrainingVectors), numTestingVectors(numTestingVectors),
@@ -45,6 +49,8 @@ public:
             testingOutputs[i][0] = sin(temp);
         }
     }
+
+    static void initializeLetters();
 };
 
 #endif //TRAININGDATA_H

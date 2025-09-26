@@ -21,8 +21,9 @@ int main()
     Tanh tanh;
     MultiLayerPerceptron limaMikeMike(4, 5, 1, 10, 0.1, &tanh);
     const TrainingData sinData(4, 1, 1000, 100);
+    TrainingData::initializeLetters();
     //MultiLayerPerceptron::testOutputs(limaMikeMike, sinData.testingInputs, sinData.testingOutputs);
-    MultiLayerPerceptron::train(limaMikeMike, sinData.trainingInputs, sinData.trainingOutputs, 1000);
+    MultiLayerPerceptron::train(limaMikeMike, sinData.trainingInputs, sinData.trainingOutputs, 2000);
     MultiLayerPerceptron::testOutputs(limaMikeMike, sinData.testingInputs, sinData.testingOutputs);
     std::cout << "Success!" << std::endl;
     MultiLayerPerceptron::testOutputs(limaMikeMike, sinData.trainingInputs, sinData.trainingOutputs);
